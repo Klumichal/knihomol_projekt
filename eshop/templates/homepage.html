@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block page_title%} homepage {% endblock page_title %}
+
+{% block content %}
+
+
+<div class="container">
+    <div class="row">
+        {% for category in categories %}
+            <a href="{% url "homepage" %}?category={{ category.name }}" class="btn btn-secondary col-2">
+            {{ category.name }}
+            </a>
+        {% endfor %}
+    </div>
+</div>
+
+<br>
+
+<div class="container">
+    <div class="row">
+
+        {% for product in products %}
+            <div class="card mx-auto" style="width: 18rem;">
+                <!--<img src="https://via.placeholder.com/150" class="bd-placeholder-img card-img-top" alt="">-->
+                <img class="img-circle" src={{ product.image.url }} alt="Generic placeholder image" width="140" height="140">
+                <div class="card-body">
+                    <div class="card-title"><strong>{{ product.title }}</strong></div>
+                    <p>Autor: {{ product.author.name }} </p>
+                    <p>Kategorie: {{ product.category.name }} </p>
+                    <p class="card-text"><strong>Cena</strong> {{ product.price }} CZK</p>
+                    <p class="card-text"> Vydáno {{ product.published|date:"d.m. Y" }} </p>
+                    <p class="card-text"> <b>Popis:</b> {{ product.description|truncatechars:50 }}</p>
+                    <a href="{% url "add_to_cart" product.pk %}" class="btn btn-primary"> Přidej do košíku</a>
+                    <a href="{% url "list_product_review" product.pk %}" class="btn btn-success mt-2"> Hodnocení</a>
+
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+    <p class="mt-5"> zboží skladem: {{ products.count }}</p>
+
+{% endblock content %}

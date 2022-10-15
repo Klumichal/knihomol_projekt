@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block page_title%} košík {% endblock page_title %}
+
+{% block content %}
+
+    <h1>Košík - {{cart.user.username}}</h1>
+    <strong>{{ cart.total_price|floatformat:2 }} ,- CZK</strong>
+
+    {% for product in cart.products.all %}
+        <div class="card mt-5" style="width: 18rem;">
+            <img src="https://via.placeholder.com/150" class="bd-placeholder-img card-img-top" alt="">
+            <div class="card-body">
+                <h2 class="card-title"><strong>{{ product.title }}</strong></h2>
+                <h4 class="card-text"><strong>Cena</strong> {{ product.price }} CZK</h4>
+                <h4 class="card-text"> Vydáno {{ product.published|date:"d.m. Y" }} </h4>
+                <h4 class="card-text"> Popis: <br></h4>
+                <p>{{ product.summary }}</p>
+                <a href="{% url "remove_from_cart" product.pk %}" class="btn btn-danger"> Odeber z košíku</a>
+            </div>
+        </div>
+    {% endfor %}
+    <br>
+
+
+
+{% endblock content %}

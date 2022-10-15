@@ -1,0 +1,1 @@
+web: gunicorn eknihy.wsgi --log-file -
